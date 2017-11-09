@@ -23,6 +23,7 @@
 
         <!-- Disable the second-level cache  -->
         <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+        <property name="connection.autocommit">true</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>

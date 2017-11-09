@@ -2,6 +2,8 @@ package net.gesher.rides.server;
 
 import net.gesher.rides.server.dal.DbSessionManager;
 import net.gesher.rides.server.dal.RideDal;
+import net.gesher.rides.server.dal.UserDal;
+import net.gesher.rides.server.entity.Passenger;
 import net.gesher.rides.server.entity.Ride;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,12 +24,9 @@ public class RideDalTest {
     @Test
     public void testGetRideList(){
         RideDal dal = new RideDal(sessionManager);
-        Calendar calendar = GregorianCalendar.getInstance();
-        calendar.set(Calendar.DATE, 6);
-        calendar.set(Calendar.YEAR, 2017);
-        calendar.set(Calendar.MONTH, 10);
 
-        List<Ride> rides = dal.getSingleDayRides(calendar.getTime());
+        Calendar calendar = getTestDate();
+        List<Ride> rides = dal.getSingleDayRides(getTestDate().getTime(), true);
 
         assert rides.size() > 0;
         for(Ride r : rides) {
@@ -41,9 +40,30 @@ public class RideDalTest {
         }
     }
 
+    private Calendar getTestDate(){
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.set(Calendar.DATE, 6);
+        calendar.set(Calendar.YEAR, 2017);
+        calendar.set(Calendar.MONTH, 10);
+        return calendar;
+    }
+
+    @Test
+    public void testAttachPassenger(){
+        RideDal dal = new RideDal(sessionManager);
+        Ride r = dal.getSingleDayRides(getTestDate().getTime(), true).get(0);
+
+        Passenger p = new Passenger();
+        p.setUser(new UserDal(sessionManager).getById("aa11"));
+        dal.attachPassengerToRide(p, r);
+
+    }
+
     @Test
     public void testAddRide(){
         RideDal dal = new RideDal(sessionManager);
+        List<Ride> rides = dal.getAll();
+        int count = rides.size();
         Ride r = new Ride();
         r.setCreatingUser(null);
         r.setDepartureDate(new Date());
@@ -56,5 +76,9 @@ public class RideDalTest {
 
         assert returnedRide != null;
         assert returnedRide.getId() > 0;
+        rides = dal.getAll();
+        assert rides.size() == count + 1;
+
+        dal.deleteRide(r);
     }
 }
