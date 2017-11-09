@@ -1,1 +1,5 @@
-<p>{{ test }}</p>
+<div style="margin: 10px" ng-class="{'bg-blue': $index % 2 == 0 }" class="bg-warning row content"
+	 ng-repeat="ride in rides | orderBy : 'destination'">
+	<p ng-repeat="(key,val) in ride">{{key}}: {{val}}</p>
+	<p>Ride no: {{$index}}</p>
+</div>

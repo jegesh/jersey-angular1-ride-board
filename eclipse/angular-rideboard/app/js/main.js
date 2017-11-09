@@ -12,7 +12,7 @@
     '$locationProvider',
     '$routeProvider',
     function($locationProvider, $routeProvider) {
-      $locationProvider.hashPrefix('');
+      $locationProvider.hashPrefix('!');
       // routes
       $routeProvider
         .when("/", {

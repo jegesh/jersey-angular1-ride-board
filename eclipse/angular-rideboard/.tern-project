@@ -10,11 +10,12 @@
     "complete_strings": {
       
     },
-    "angular1": {
+    "bootstrap": {
       
     }
   },
   "libs": [
-    "browser"
+    "browser",
+    "jquery"
   ]
 }
