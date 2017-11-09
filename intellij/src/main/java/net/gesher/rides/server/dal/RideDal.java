@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.*;
 
 import static net.gesher.rides.server.dal.ExpressionBuilderHelper.*;
@@ -20,28 +21,28 @@ public class RideDal {
     }
 
     /**
+     *
+     * @param r
+     * @return null if insert failed, otherwise id of created record
+     */
+    public Ride insertRide(Ride r){
+        Serializable result = sessionManager.getSessionFactoryInstance().openSession().save(r);
+        if((Long)result < 1) return null;
+        return r;
+    }
+
+    /**
      * retrieves all rides scheduled to leave today
      * @return
      */
-    public List<Ride> getTodayRides(){
-        Date today = new Date();
+    public List<Ride> getSingleDayRides(Date target){
 
         List<ExpressionBuilderHelper> constraints = new ArrayList<>();
-        ExpressionBuilderHelper exBuilder = new ExpressionBuilderHelper("departureDate", Date.class, DateUtils.getEndOfPreviousDay(today), PREDICATE_BETWEEN);
-        exBuilder.setAdditionalValue(DateUtils.getStartOfNextDay(today));
+        ExpressionBuilderHelper exBuilder = new ExpressionBuilderHelper("departureDate", Date.class, DateUtils.getEndOfPreviousDay(target), PREDICATE_BETWEEN);
+        exBuilder.setAdditionalValue(DateUtils.getStartOfNextDay(target));
         constraints.add(exBuilder);
         return getRideList(constraints);
 
-    }
-
-    public List<Ride> getTomorrowRides(){
-        Calendar calendar = GregorianCalendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.DATE, -1);
-
-        List<ExpressionBuilderHelper> constraints = new ArrayList<>();
-        constraints.add(new ExpressionBuilderHelper("departureDate", Date.class, calendar.getTime(), PREDICATE_EQUALS));
-        return getRideList(constraints);
     }
 
     /**

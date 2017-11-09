@@ -62,6 +62,8 @@ public class Ride {
     }
 
     public void setDepartureHour(Integer departureHour) {
+        if(departureHour > 23 || departureHour < 0)
+            throw new IllegalArgumentException("Hour can not be greater than 23 or less than zero");
         this.departureHour = departureHour;
     }
 
@@ -71,6 +73,8 @@ public class Ride {
     }
 
     public void setDepartureMinute(Integer departureMinute) {
+        if(departureMinute > 59 || departureMinute < 0)
+            throw new IllegalArgumentException("Minute can not be greater than 59 or less than zero");
         this.departureMinute = departureMinute;
     }
 
