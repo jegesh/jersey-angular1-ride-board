@@ -19,26 +19,9 @@ import java.util.Date;
 
 @Provider
 public class JwtAuthProvider implements ContainerRequestFilter {
-    private static final String SECRET = "thequickbr0vvnfoxjumped overthe l azydog";
-    private static final String ISSUER = "myserver";
+    public static final String SECRET = "thequickbr0vvnfoxjumped overthe l azydog";
+    public static final String ISSUER = "myserver";
 
-
-    private String createToken() {
-        try {
-            Algorithm algorithm = null;
-            try {
-                algorithm = Algorithm.HMAC256(SECRET);
-            } catch (UnsupportedEncodingException e) {
-                throw new WebApplicationException(e);
-            }
-            return JWT.create()
-                    .withClaim("dat", new Date())
-                    .withIssuer(ISSUER)
-                    .sign(algorithm);
-        } catch (JWTCreationException exception) {
-            throw new WebApplicationException(exception);
-        }
-    }
 
     /**
      *

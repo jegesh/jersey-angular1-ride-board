@@ -27,4 +27,11 @@ public class DateUtils {
 //        c.setTimeZone(TimeZone.getTimeZone("UTC"));
         return c.getTime();
     }
+
+    public static Date getXDaysAhead(Date d, int days){
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        c.add(Calendar.DATE, days);
+        return c.getTime();
+    }
 }

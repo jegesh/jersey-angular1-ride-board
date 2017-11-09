@@ -1,7 +1,8 @@
-package net.gesher.rides.server.services;
+package net.gesher.rides.server.services.authorized;
 
 import net.gesher.rides.server.dal.RideDal;
 import net.gesher.rides.server.entity.Ride;
+import net.gesher.rides.server.services.ApplicationProvider;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
