@@ -20,6 +20,12 @@ angular.module("rideBoard").controller('MainController', ['$scope',  function($s
 		  destination: "Haifa",
 		  driver: "Gil",
 		  departureHour: "15:00"
-	  }
+	  },
+          {
+              driver: "noone",
+              destination: "nowherffkke",
+              name: "none"
+          }
   ];
+  
 }]);

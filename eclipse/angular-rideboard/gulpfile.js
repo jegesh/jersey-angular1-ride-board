@@ -1,5 +1,7 @@
 // gulp
 var gulp = require('gulp');
+var watch = require('gulp-watch');
+var batch = require('gulp-batch');
 
 // plugins
 var connect = require('gulp-connect');
@@ -13,10 +15,16 @@ var runSequence = require('run-sequence');
 
 // tasks
 gulp.task('lint', function() {
-  gulp.src(['./app/**/*.js', '!./app/bower_components/**'])
+  gulp.src(['./app/js/**/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
+});
+gulp.task('watch', function () {
+    watch(['./app/js/**/*.js', '!./app/js/bundled.js'], batch(function (events, done) {
+        gulp.start('clean', 'browserify', done);
+//        gulp.start('browserify', done);
+    }));
 });
 gulp.task('clean', function() {
     gulp.src('./dist/*')
@@ -91,10 +99,9 @@ gulp.task('browserifyDist', function() {
 gulp.task('default', function() {
   runSequence(
     ['clean'],
-    ['lint', 'browserify', 'connect']
+    ['browserify', 'connect']
   );
 });
-// *** build task *** //
 gulp.task('build', function() {
   runSequence(
     ['clean'],
