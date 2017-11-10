@@ -1,16 +1,16 @@
 package net.gesher.rides.server.auth;
 
 
-import net.gesher.rides.server.entity.PrincipalUser;
+import net.gesher.rides.server.entity.User;
 
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
 
 public class MySecurityContext implements SecurityContext {
-    private PrincipalUser user;
+    private User user;
     private String scheme;
 
-    public MySecurityContext(PrincipalUser user, String scheme) {
+    public MySecurityContext(User user, String scheme) {
         this.user = user;
         this.scheme = scheme;
     }

@@ -4,10 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.security.Principal;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Principal{
     public static final String ROLE_USER = "user";
     public static final String ROLE_ADMIN = "admin";
     private String id;

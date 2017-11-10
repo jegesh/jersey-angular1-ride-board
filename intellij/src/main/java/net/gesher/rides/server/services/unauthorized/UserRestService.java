@@ -36,11 +36,11 @@ public class UserRestService {
         User verifiedUser = new UserDal(ApplicationProvider.getSessionManager()).verify(userId, DigestUtils.sha256Hex(password));
         if(verifiedUser == null) throw new WebApplicationException(403);
         return Response.ok("Verified")
-                .cookie(new NewCookie("jwt", createToken(verifiedUser.getName(), verifiedUser.getPhone(), verifiedUser.getRole())))
+                .cookie(new NewCookie("jwt", createToken(verifiedUser)))
                 .build();
     }
 
-    private String createToken(String name, String phone, String role) {
+    private String createToken(User user) {
         try {
             Algorithm algorithm = null;
             try {
@@ -49,11 +49,12 @@ public class UserRestService {
                 throw new WebApplicationException(e);
             }
             return JWT.create()
-                    .withClaim("iat", new Date())
-                    .withClaim("aud", name)
-                    .withClaim("tel", phone)
-                    .withClaim("rol", role)
-                    .withClaim("exp", DateUtils.getXDaysAhead(new Date(), 90))
+                    .withClaim("aud", user.getId())
+                    .withClaim("tel", user.getPhone())
+                    .withClaim("rol", user.getRole())
+                    .withClaim("nam", user.getName())
+                    .withExpiresAt(DateUtils.getXDaysAhead(new Date(), 90))
+                    .withIssuedAt(new Date())
                     .withIssuer(ISSUER)
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
@@ -84,7 +85,7 @@ public class UserRestService {
         UserDal dal = new UserDal(ApplicationProvider.getSessionManager());
         dal.registerUser(user);
         return Response.ok(user.getId())
-                .cookie(new NewCookie("jwt", createToken(user.getName(), user.getPhone(), user.getRole())))
+                .cookie(new NewCookie("jwt", createToken(user)))
                 .build();
     }
 }
