@@ -3,3 +3,11 @@
 .bg-blue{
 	background-color: skyblue;
 }
+
+form .row{
+    margin: 10px;
+}
+
+.newRideForm span.input-group-addon{
+    width: 120px;
+}
