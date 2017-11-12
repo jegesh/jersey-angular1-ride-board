@@ -2,16 +2,19 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>rideboard-rest</display-name>
   <servlet>
-    <servlet-name>net.gesher.rides.server.services.ApplicationProvider</servlet-name>
+    <servlet-name>AuthenticatedService</servlet-name>
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
   	<init-param>
       <param-name>com.sun.jersey.config.property.packages</param-name>
       <param-value>net.gesher.rides.server.services.authenticated</param-value>
     </init-param>
-  	
+  	<init-param>
+	    <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+	    <param-value>true</param-value>
+	</init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>net.gesher.rides.server.services.ApplicationProvider</servlet-name>
+    <servlet-name>AuthenticatedService</servlet-name>
     <url-pattern>/rs/*</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -6,12 +6,12 @@ import javax.persistence.*;
 @Table(name = "passenger")
 public class Passenger {
     private User user;
-    private Ride ride;
+    private long rideId;
     private long id;
     private String passengerName;
     private String passengerPhone;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="user_fk")
     public User getUser() {
         return user;
@@ -21,14 +21,13 @@ public class Passenger {
         this.user = user;
     }
 
-    @OneToOne
-    @JoinColumn(name = "ride_fk")
-    public Ride getRide() {
-        return ride;
+    @Column(name = "ride_fk")
+    public long getRideId() {
+        return rideId;
     }
 
-    public void setRide(Ride ride) {
-        this.ride = ride;
+    public void setRideId(long rideId) {
+        this.rideId = rideId;
     }
 
     @Column
@@ -60,4 +59,16 @@ public class Passenger {
         this.passengerPhone = passengerPhone;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(super.equals(obj)) return true;
+        if(!(obj instanceof Passenger)) return false;
+        Passenger p = (Passenger)obj;
+        if(this.getUser().getId().equals(p.getUser().getId()) )
+            return true;
+        if(this.getPassengerPhone() != null && p.getPassengerPhone() != null &&
+                this.getPassengerPhone().equals(p.getPassengerPhone()))
+            return true;
+        return false;
+    }
 }

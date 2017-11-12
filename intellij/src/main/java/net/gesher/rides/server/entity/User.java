@@ -46,7 +46,7 @@ public class User implements Principal{
     }
 
     @Column
-    public String getPassword() {
+    private String getPassword() {
         return password;
     }
 

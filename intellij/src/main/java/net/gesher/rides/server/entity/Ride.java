@@ -2,6 +2,8 @@ package net.gesher.rides.server.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "ride")
@@ -15,6 +17,7 @@ public class Ride {
     private int freeSpace;
     private String driverName;
     private String driverPhone;
+    private List<Passenger> passengers;
     public static final String FIELD_DEPARTURE_DATE = "departure_date";
 
     @Column
@@ -27,6 +30,16 @@ public class Ride {
     public void setId(long id) {
         this.id = id;
     }
+
+////    @OneToMany
+////    @JoinColumn(name = "ride_fk")
+//    public List<Passenger> getPassengers() {
+//        return passengers;
+//    }
+//
+//    public void setPassengers(List<Passenger> passengers){
+//        this.passengers = passengers;
+//    }
 
     @ManyToOne
     @JoinColumn(name="creating_user")
