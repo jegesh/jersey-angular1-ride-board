@@ -1,2 +1,17 @@
-<h1>Page 2</h1>
-<p>{{text2}}</p>
+<div>
+    <form>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Destination</span>
+            <input ng-model="destination" type="text" class="form-control" placeholder="Name of city" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Date</span>
+            <input ng-model="departureDate" type="date" class="form-control" aria-describedby="basic-addon1">
+        </div>
+    </form>
+    
+    
+    <button ng-click="alertForm()">Display values</button>
+    <p>{{departureDate | date:'MM/dd/yyyy'}}</p>
+    
+</div>

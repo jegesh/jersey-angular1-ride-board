@@ -12,24 +12,26 @@ public class HibernateInitializer {
     private static final String ENV_RUN_ENVIRONMENT = "HIBERNATE_RUN_ENVIRONMENT";
     private static DbSessionManager sessionManager;
 
-    static{
-        // read config.properties file
-        Properties properties = new Properties();
-        try {
-            properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("config.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IllegalStateException(e);
-        }
+    static {
+        if (sessionManager == null) {
+            // read config.properties file
+            Properties properties = new Properties();
+            try {
+                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("config.properties"));
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new IllegalStateException(e);
+            }
 
-        String dbEnvironment = System.getenv(ENV_RUN_ENVIRONMENT);
-        // initialize session manager
-        sessionManager = new DbSessionManager(
-                properties.getProperty("db." + dbEnvironment + ".host"),
-                properties.getProperty("db." + dbEnvironment + ".name"),
-                properties.getProperty("db." + dbEnvironment + ".user"),
-                properties.getProperty("db." + dbEnvironment + ".password")
-        );
+            String dbEnvironment = System.getenv(ENV_RUN_ENVIRONMENT);
+            // initialize session manager
+            sessionManager = new DbSessionManager(
+                    properties.getProperty("db." + dbEnvironment + ".host"),
+                    properties.getProperty("db." + dbEnvironment + ".name"),
+                    properties.getProperty("db." + dbEnvironment + ".user"),
+                    properties.getProperty("db." + dbEnvironment + ".password")
+            );
+        }
     }
 
     public static DbSessionManager getSessionManager(){ return sessionManager; }
