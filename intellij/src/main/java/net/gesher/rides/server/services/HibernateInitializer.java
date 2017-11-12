@@ -2,22 +2,17 @@ package net.gesher.rides.server.services;
 
 import net.gesher.rides.server.dal.DbSessionManager;
 
-import javax.ws.rs.core.Application;
-import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.util.Properties;
 
-@Provider
-public class ApplicationProvider extends Application {
+public class HibernateInitializer {
     private static final String DB_ENVIRONMENT_TEST = "test";
     private static final String DB_ENVIRONMENT_DEV = "dev";
     private static final String DB_ENVIRONMENT_PRODUCTION = "prod";
     private static final String ENV_RUN_ENVIRONMENT = "HIBERNATE_RUN_ENVIRONMENT";
     private static DbSessionManager sessionManager;
 
-    public ApplicationProvider(){
-        super();
-
+    static{
         // read config.properties file
         Properties properties = new Properties();
         try {
@@ -35,7 +30,6 @@ public class ApplicationProvider extends Application {
                 properties.getProperty("db." + dbEnvironment + ".user"),
                 properties.getProperty("db." + dbEnvironment + ".password")
         );
-
     }
 
     public static DbSessionManager getSessionManager(){ return sessionManager; }

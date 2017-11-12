@@ -1,14 +1,13 @@
-package net.gesher.rides.server.services.unauthorized;
+package net.gesher.rides.server.services.unauthenticated;
 
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.sun.jersey.api.view.Viewable;
 import net.gesher.rides.server.dal.DateUtils;
 import net.gesher.rides.server.dal.UserDal;
 import net.gesher.rides.server.entity.User;
-import net.gesher.rides.server.services.ApplicationProvider;
+import net.gesher.rides.server.services.HibernateInitializer;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -33,7 +32,7 @@ public class UserRestService {
             throw new WebApplicationException(403);
         String userId = credentials[0];
         String password = credentials[1];
-        User verifiedUser = new UserDal(ApplicationProvider.getSessionManager()).verify(userId, DigestUtils.sha256Hex(password));
+        User verifiedUser = new UserDal(HibernateInitializer.getSessionManager()).verify(userId, DigestUtils.sha256Hex(password));
         if(verifiedUser == null) throw new WebApplicationException(403);
         return Response.ok("Verified")
                 .cookie(new NewCookie("jwt", createToken(verifiedUser)))
@@ -82,7 +81,7 @@ public class UserRestService {
         user.setPhone(phone);
         user.setRole(User.ROLE_USER);
         user.setId(Base64.encodeBase64String((phone+name).getBytes()));
-        UserDal dal = new UserDal(ApplicationProvider.getSessionManager());
+        UserDal dal = new UserDal(HibernateInitializer.getSessionManager());
         dal.registerUser(user);
         return Response.ok(user.getId())
                 .cookie(new NewCookie("jwt", createToken(user)))
