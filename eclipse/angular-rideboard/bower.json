@@ -13,13 +13,15 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.2.22",
-    "angular-animate": "~1.2.22",
-    "angular-route": "~1.2.22",
-    "jquery": "~2.1.1",
-    "animate.css": "~3.2.0",
-    "bootstrap": "~3.2.0",
-    "fontawesome": "~4.1.0",
-    "jshint": "^2.9.1"
+    "angular": "^1.6.6",
+    "angular-animate": ">=1.2.22",
+    "angular-route": ">=1.2.22",
+    "jquery": "^2.1.1",
+    "animate.css": "^3.2.0",
+    "bootstrap": "^3.3.0",
+    "fontawesome": "^4.1.0",
+    "jshint": "^2.9.1",
+    "angular-touch": "^1.6.6",
+    "angular-ui": "^0.4.0"
   }
 }

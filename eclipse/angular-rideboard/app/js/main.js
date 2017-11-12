@@ -5,14 +5,14 @@
   require('angular');
   require('angular-route');
   require('angular-animate');
+  require('angular-touch');
+  require('angular-ui-bootstrap');
 
-  angular.module('rideBoard', ['ngRoute', 'ngAnimate'])
+  angular.module('rideBoard', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap'])
 
   .config([
-    '$locationProvider',
     '$routeProvider',
-    function($locationProvider, $routeProvider) {
-      $locationProvider.hashPrefix('!');
+    function($routeProvider) {
       // routes
       $routeProvider
         .when("/home", {
